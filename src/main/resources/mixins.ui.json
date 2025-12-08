@@ -1,11 +1,13 @@
 {
-	"package": "",
+	"package": "com.nali.ui.mixin",
 	"required": true,
-	"refmap": "${mixin_refmap}",
+	"refmap": "mixins.ui.refmap.json",
 	"target": "@env(DEFAULT)",
 	"minVersion": "0.8.5",
 	"compatibilityLevel": "JAVA_8",
 	"mixins": [],
 	"server": [],
-	"client": []
+	"client": [
+		"Mminecraft"
+	]
 }
