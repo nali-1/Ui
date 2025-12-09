@@ -38,8 +38,8 @@ public class RenderUi extends Render<EntityUi>
 		int Ics = (Ic >> 20) & 0xF;
 		int Ick = (Ics << 4) | Icb;
 		//.i Um8 Ukf8 Ukf16 Uc32
-		C.Mdraw((long)Em.UI_RAIN.ordinal() << (8*7) | (long)Ekf.UI_IDLE.ordinal() << (8*6) | ((long)(Ve.Ukf & 0xFFFF) << (8*5)) | ((IMixinEntityRenderer)Minecraft.getMinecraft().entityRenderer).Mlightmap_colors()[Ick] & 0xFFFFFFFFL);
-		C.Mdraw((long)Em.CROAKIE_RAIN.ordinal() << (8*7) | (long)Ekf.UI_IDLE.ordinal() << (8*6) | ((long)(Ve.Ukf & 0xFFFF) << (8*5)) | ((IMixinEntityRenderer)Minecraft.getMinecraft().entityRenderer).Mlightmap_colors()[Ick] & 0xFFFFFFFFL);
+		C.Mdraw((long)Em.UI_RAIN.ordinal() << (8*7) | (long)Ekf.UI_IDLE.ordinal() << (8*6) | ((long)Ve.Ukf << (8*5)) | ((IMixinEntityRenderer)Minecraft.getMinecraft().entityRenderer).Mlightmap_colors()[Ick] & 0xFFFFFFFFL);
+		C.Mdraw((long)Em.CROAKIE_RAIN.ordinal() << (8*7) | (long)Ekf.UI_IDLE.ordinal() << (8*6) | ((long)Ve.Ukf << (8*5)) | ((IMixinEntityRenderer)Minecraft.getMinecraft().entityRenderer).Mlightmap_colors()[Ick] & 0xFFFFFFFFL);
 		GlStateManager.popMatrix();
 		super.doRender(Ve, Dx, Dy, Dz, Fyaw, Fpartialticks);
 	}
