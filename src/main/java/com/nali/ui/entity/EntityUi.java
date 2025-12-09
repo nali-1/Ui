@@ -36,7 +36,7 @@ public class EntityUi extends EntityTameable
 		this.setSize(1.0F, 2.0F);
 	}
 
-	private int Ukf;
+	public int Ukf;
 	private static final DataParameter<Integer> vKF = EntityDataManager.<Integer>createKey(EntityUi.class, DataSerializers.VARINT);
 	@Override
 	protected void entityInit()

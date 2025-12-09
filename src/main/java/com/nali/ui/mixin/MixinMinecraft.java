@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.io.File;
 
 @Mixin(Minecraft.class)
-public abstract class Mminecraft
+public abstract class MixinMinecraft
 {
 	@Inject(method = "init", at = @At("TAIL"))
 	private void Minit(CallbackInfo Vc)

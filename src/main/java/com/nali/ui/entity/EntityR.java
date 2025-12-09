@@ -23,7 +23,7 @@ public class EntityR
 {
 	public static void Madd()
 	{
-		EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID, "ui"), EntityUi.class, "ui", 0, Ui.UI, 64, 1, true, 0xFFFFFFFF, 0xFFFFFFFF);
+		EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID, "ui"), EntityUi.class, "ui", 0, Ui.UI, 64, 1, true, 0xCEDDC8, 0xA4D97F);
 	}
 
 	public static void Mspawn()
