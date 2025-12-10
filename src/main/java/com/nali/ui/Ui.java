@@ -13,6 +13,15 @@ public class Ui
 	@Mod.Instance
 	public static Ui UI;
 
+	public static float fDelta;
+	private static long Llast_time = System.nanoTime();
+	public static void Mdelta()
+	{
+		long now = System.nanoTime();
+		fDelta = (now - Llast_time) / 1_000_000_000F;
+		Llast_time = now;
+	}
+
 	public static final Logger LOGGER = LogManager.getLogger(Tags.MOD_NAME);
 
 	@Mod.EventHandler

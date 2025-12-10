@@ -36,13 +36,13 @@ public class EntityUi extends EntityTameable
 		this.setSize(1.0F, 2.0F);
 	}
 
-	public int Ukf;
-	private static final DataParameter<Integer> vKF = EntityDataManager.<Integer>createKey(EntityUi.class, DataSerializers.VARINT);
+	public float Fkf;
+	private static final DataParameter<Float> vKF = EntityDataManager.<Float>createKey(EntityUi.class, DataSerializers.FLOAT);
 	@Override
 	protected void entityInit()
 	{
 		super.entityInit();
-		this.dataManager.register(vKF, 0);
+		this.dataManager.register(vKF, 0.0F);
 	}
 
 //	private final static ITextComponent vACTION = new TextComponentString("Action").setStyle(new Style().setUnderlined(true));
@@ -93,26 +93,26 @@ public class EntityUi extends EntityTameable
 	@Override
 	protected void initEntityAI()
 	{
-		this.aiSit = new EntityAISit(this);
-		this.tasks.addTask(1, new EntityAISwimming(this));
-		this.tasks.addTask(2, this.aiSit);
-		this.tasks.addTask(3, new EntityAILeapAtTarget(this, 0.4F));
-		this.tasks.addTask(4, new EntityAIAttackMelee(this, 1.0D, true));
-		this.tasks.addTask(5, new EntityAIFollowOwner(this, 1.0D, 10.0F, 2.0F));
-		this.tasks.addTask(6, new EntityAIMate(this, 1.0D));
-		this.tasks.addTask(7, new EntityAIWanderAvoidWater(this, 1.0D));
-		this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
-		this.tasks.addTask(8, new EntityAILookIdle(this));
-		this.targetTasks.addTask(1, new EntityAIOwnerHurtByTarget(this));
-		this.targetTasks.addTask(2, new EntityAIOwnerHurtTarget(this));
-		this.targetTasks.addTask(3, new EntityAIHurtByTarget(this, true, new Class[0]));
-		this.targetTasks.addTask(4, new EntityAINearestAttackableTarget<EntityLiving>(this, EntityLiving.class, 10, true, true, new Predicate<EntityLiving>()
-		{
-			public boolean apply(@Nullable EntityLiving Ve)
-			{
-				return Ve != null && IMob.VISIBLE_MOB_SELECTOR.apply(Ve);
-			}
-		}));
+//		this.aiSit = new EntityAISit(this);
+//		this.tasks.addTask(1, new EntityAISwimming(this));
+//		this.tasks.addTask(2, this.aiSit);
+//		this.tasks.addTask(3, new EntityAILeapAtTarget(this, 0.4F));
+//		this.tasks.addTask(4, new EntityAIAttackMelee(this, 1.0D, true));
+//		this.tasks.addTask(5, new EntityAIFollowOwner(this, 1.0D, 10.0F, 2.0F));
+//		this.tasks.addTask(6, new EntityAIMate(this, 1.0D));
+//		this.tasks.addTask(7, new EntityAIWanderAvoidWater(this, 1.0D));
+//		this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
+//		this.tasks.addTask(8, new EntityAILookIdle(this));
+//		this.targetTasks.addTask(1, new EntityAIOwnerHurtByTarget(this));
+//		this.targetTasks.addTask(2, new EntityAIOwnerHurtTarget(this));
+//		this.targetTasks.addTask(3, new EntityAIHurtByTarget(this, true, new Class[0]));
+//		this.targetTasks.addTask(4, new EntityAINearestAttackableTarget<EntityLiving>(this, EntityLiving.class, 10, true, true, new Predicate<EntityLiving>()
+//		{
+//			public boolean apply(@Nullable EntityLiving Ve)
+//			{
+//				return Ve != null && IMob.VISIBLE_MOB_SELECTOR.apply(Ve);
+//			}
+//		}));
 	}
 
 	@Override
@@ -216,10 +216,10 @@ public class EntityUi extends EntityTameable
 	{
 		super.onUpdate();
 
-		if (!this.world.isRemote)
-		{
-			this.dataManager.set(vKF, this.Ukf);
-		}
+//		if (!this.world.isRemote)
+//		{
+//			this.dataManager.set(vKF, this.Fkf);
+//		}
 	}
 
 	@Nullable

@@ -1,6 +1,7 @@
 package com.nali.ui.mixin;
 
 import com.nali.C;
+import com.nali.ui.Ui;
 import net.minecraft.client.Minecraft;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
@@ -17,5 +18,11 @@ public abstract class MixinMinecraft
 	{
 		System.load(new File("libSmallPointer.so").getAbsolutePath());
 		C.Mgl();
+	}
+
+	@Inject(method = "runGameLoop", at = @At("TAIL"))
+	private void Mrun_game_loop(CallbackInfo ci)
+	{
+		Ui.Mdelta();
 	}
 }
