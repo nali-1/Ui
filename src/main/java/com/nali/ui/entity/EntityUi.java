@@ -1,12 +1,11 @@
 package com.nali.ui.entity;
 
-import com.google.common.base.Predicate;
+import com.nali.ui.M;
+import com.nali.ui.Ui;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.*;
-import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -21,6 +20,7 @@ import net.minecraftforge.event.ForgeEventFactory;
 
 import javax.annotation.Nullable;
 
+//! EntityLivingBase
 public class EntityUi extends EntityTameable
 {
 //	private final static byte uHOME = 1;
@@ -36,8 +36,9 @@ public class EntityUi extends EntityTameable
 		this.setSize(1.0F, 2.0F);
 	}
 
-	public float Fkf;
-	private static final DataParameter<Float> vKF = EntityDataManager.<Float>createKey(EntityUi.class, DataSerializers.FLOAT);
+	public float Fkf0;
+	public float Fkf1;
+	public static final DataParameter<Float> vKF = EntityDataManager.<Float>createKey(EntityUi.class, DataSerializers.FLOAT);
 	@Override
 	protected void entityInit()
 	{
@@ -211,15 +212,21 @@ public class EntityUi extends EntityTameable
 		return flag;
 	}
 
+	//! c
+	public final static int[] pKF = new int[]{0, 2};
 	@Override
 	public void onUpdate()
 	{
 		super.onUpdate();
+//		if (this.world.isRemote)
+//			this.rotationYaw += 45.0F / Ui.bTICK;
 
-//		if (!this.world.isRemote)
-//		{
-//			this.dataManager.set(vKF, this.Fkf);
-//		}
+		if (!this.world.isRemote)
+		{
+			this.Fkf0 += 1.0F / Ui.bTICK;
+			this.Fkf0 = M.Mwarp(this.Fkf0, pKF[0], pKF[1]);
+			this.dataManager.set(vKF, this.Fkf0);
+		}
 	}
 
 	@Nullable
