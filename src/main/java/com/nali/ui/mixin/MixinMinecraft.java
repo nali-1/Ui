@@ -17,7 +17,8 @@ public abstract class MixinMinecraft
 	@Inject(method = "init", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/OpenGlHelper;initializeTextures()V", shift = At.Shift.AFTER))
 	private void Minit(CallbackInfo Vc)
 	{
-		System.loadLibrary("SmallPointer");
+		//System.loadLibrary("SmallPointer");
+		System.load(new File("libSmallPointer.so").getAbsolutePath());
 		C.Mgl();
 	}
 
