@@ -3,6 +3,7 @@ package com.nali.ui.entity.render;
 import com.nali.C;
 import com.nali.Ekf;
 import com.nali.Em;
+import com.nali.ui.M;
 import com.nali.ui.entity.EntityUi;
 import com.nali.ui.mixin.IMixinEntityRenderer;
 import net.minecraft.client.Minecraft;
@@ -54,17 +55,18 @@ public class RenderUi extends Render<EntityUi>
 		byte Bk_ui = Ventitydatamanager.get(EntityUi.vK);
 		byte Ba0 = Ventitydatamanager.get(EntityUi.vA0);
 		byte Ba1 = Ventitydatamanager.get(EntityUi.vA1);
-		float Fkf = Ve.Fkf1;
+		//float Fkf = Ve.Fkf1;
 
-//		Ekf[] Vekf = Ekf.values();
-//		byte Bstart = Vekf[Bk_ui].start;
-//		byte Bend = Vekf[Bk_ui].end;
+		Ekf[] Vekf = Ekf.values();
+		byte Bstart = Vekf[Bk_ui].start;
+		byte Bend = Vekf[Bk_ui].end;
+		float Fkf = M.Mlerp_wrap(Ve.Fkf0, Ve.Fkf1, Bstart, Bend, Fpartialticks);
 //		float Fkf;
 //		if (Ve.Fkf0 == Ve.Fkf1)
 //			Fkf = Ve.Fkf0;
 //		else
 //			Fkf = M.Mwarp(Ve.Fkf0 + M.Mwarp(Ve.Fkf1 - Ve.Fkf0, Bstart, Bend) * Fpartialticks, Bstart, Bend);
-//		Ve.Fkf0 = Ve.Fkf1;
+		Ve.Fkf0 = Ve.Fkf1;
 
 //		Ve.Fkf0 += Ui.fDelta;
 		//float Fkf_croakie = Fkf;
