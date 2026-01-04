@@ -31,27 +31,6 @@ public class Ui
 
 	public static final Logger LOGGER = LogManager.getLogger(Tags.MOD_NAME);
 
-	public static void Mdownload(String Vs_url, String Vs_name)
-	{
-		try
-		{
-			URL Vurl = new URL(Vs_url);
-			try (InputStream Vinputstream = Vurl.openStream(); FileOutputStream Vfileoutputstream = new FileOutputStream(Vs_name))
-			{
-				byte[] Pbuffer = new byte[8192];
-				int In;
-				while ((In = Vinputstream.read(Pbuffer)) != -1)
-				{
-					Vfileoutputstream.write(Pbuffer, 0, In);
-				}
-			}
-		}
-		catch (IOException e)
-		{
-			throw new RuntimeException(e);
-		}
-	}
-
 	@Mod.EventHandler
 	public void M0(FMLPreInitializationEvent Ve)
 	{
