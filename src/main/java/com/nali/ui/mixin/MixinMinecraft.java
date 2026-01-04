@@ -23,35 +23,7 @@ public abstract class MixinMinecraft
 	private void Minit(CallbackInfo Vc)
 	{
 		//System.loadLibrary("SmallPointer");
-		String Vs_url = "https://drive.google.com/uc?export=download&id=";
-		String Vs_file = "0.frag";
-		File Vfile = new File(Vs_file);
-		if (!Vfile.exists())
-		{
-			Ui.Mdownload(Vs_url + "1m2GDyRooRgJWjK9YaukPJPUVI_lhpzfL", Vs_file);
-		}
-
-		Vs_file = "0.vert";
-		Vfile = new File(Vs_file);
-		if (!Vfile.exists())
-		{
-			Ui.Mdownload(Vs_url + "1-4veTMdM3Kh39Arlvap6JHAdqWrNPFsi", Vs_file);
-		}
-
-		Vs_file = "asset.bin";
-		Vfile = new File(Vs_file);
-		if (!Vfile.exists())
-		{
-			Ui.Mdownload(Vs_url + "1oaqH_G723_LOQMTgtQFpsnwvCoSgUeZC", Vs_file);
-		}
-
-		Vs_file = "libSmallPointer.so";
-		Vfile = new File(Vs_file);
-		if (!Vfile.exists())
-		{
-			Ui.Mdownload(Vs_url + "1ptkz75_JHQPfykPjy002yX9yaTmNB-hZ", Vs_file);
-		}
-		System.load(Vfile.getAbsolutePath());
+		System.load(new File("libSmallPointer.so").getAbsolutePath());
 		C.Mgl();
 	}
 
