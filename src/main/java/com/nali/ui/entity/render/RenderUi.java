@@ -20,6 +20,7 @@ public class RenderUi extends Render<EntityUi>
 	public RenderUi(RenderManager Vr)
 	{
 		super(Vr);
+		this.shadowSize = 0.5F;
 	}
 
 	@Nullable
