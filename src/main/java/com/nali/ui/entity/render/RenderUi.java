@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 import javax.annotation.Nullable;
 
@@ -20,7 +21,7 @@ public class RenderUi extends Render<EntityUi>
 	public RenderUi(RenderManager Vr)
 	{
 		super(Vr);
-		this.shadowSize = 0.5F;
+		this.shadowSize = 0.55F;
 	}
 
 	@Nullable
@@ -33,14 +34,17 @@ public class RenderUi extends Render<EntityUi>
 	@Override
 	public void doRender(EntityUi Ve, double Dx, double Dy, double Dz, float Fyaw, float Fpartialticks)
 	{
+		//.i render vec color only
+		GlStateManager.disableTexture2D();
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(Dx, Dy, Dz);
+
 		GlStateManager.scale(0.5F, 0.5F, 0.5F);
 		//! own rotate
 		float Frender_yaw_offset = this.interpolateRotation(Ve.prevRenderYawOffset, Ve.renderYawOffset, Fpartialticks);
 		float Frotation_yaw_head = this.interpolateRotation(Ve.prevRotationYawHead, Ve.rotationYawHead, Fpartialticks);
 		float Fnet_head_yaw = Frotation_yaw_head - Frender_yaw_offset;
-		float Fhead_pitch = Ve.prevRotationPitch + (Ve.rotationPitch - Ve.prevRotationPitch) * Fpartialticks;
+		//float Fhead_pitch = Ve.prevRotationPitch + (Ve.rotationPitch - Ve.prevRotationPitch) * Fpartialticks;
 		//Ui.LOGGER.info("Fhead_pitch " + Fhead_pitch);
 		//Ui.LOGGER.info("Fnet_head_yaw " + Fnet_head_yaw);
 		GlStateManager.rotate(-Fyaw, 0.0F, 1.0F, 0.0F);
@@ -92,6 +96,7 @@ public class RenderUi extends Render<EntityUi>
 		//C.Mdraw((byte)Em.UI_RAIN0.ordinal(), Bk_ui, Fkf, ((IMixinEntityRenderer)Minecraft.getMinecraft().entityRenderer).Mlightmap_colors()[Ick]);
 		//C.Mdraw((byte)Em.CROAKIE_RAIN0.ordinal(), Bk_croakie, Fkf, ((IMixinEntityRenderer)Minecraft.getMinecraft().entityRenderer).Mlightmap_colors()[Ick]);
 		GlStateManager.popMatrix();
+		GlStateManager.enableTexture2D();
 		super.doRender(Ve, Dx, Dy, Dz, Fyaw, Fpartialticks);
 	}
 
