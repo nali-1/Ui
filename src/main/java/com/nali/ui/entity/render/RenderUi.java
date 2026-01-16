@@ -12,7 +12,6 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.ResourceLocation;
-import org.lwjgl.opengl.GL11;
 
 import javax.annotation.Nullable;
 
@@ -21,7 +20,7 @@ public class RenderUi extends Render<EntityUi>
 	public RenderUi(RenderManager Vr)
 	{
 		super(Vr);
-		this.shadowSize = 0.55F;
+		this.shadowSize = 0.4F;
 	}
 
 	@Nullable
@@ -35,7 +34,6 @@ public class RenderUi extends Render<EntityUi>
 	public void doRender(EntityUi Ve, double Dx, double Dy, double Dz, float Fyaw, float Fpartialticks)
 	{
 		//.i render vec color only
-		GlStateManager.disableTexture2D();
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(Dx, Dy, Dz);
 
@@ -96,7 +94,6 @@ public class RenderUi extends Render<EntityUi>
 		//C.Mdraw((byte)Em.UI_RAIN0.ordinal(), Bk_ui, Fkf, ((IMixinEntityRenderer)Minecraft.getMinecraft().entityRenderer).Mlightmap_colors()[Ick]);
 		//C.Mdraw((byte)Em.CROAKIE_RAIN0.ordinal(), Bk_croakie, Fkf, ((IMixinEntityRenderer)Minecraft.getMinecraft().entityRenderer).Mlightmap_colors()[Ick]);
 		GlStateManager.popMatrix();
-		GlStateManager.enableTexture2D();
 		super.doRender(Ve, Dx, Dy, Dz, Fyaw, Fpartialticks);
 	}
 
