@@ -1,20 +1,13 @@
 package com.nali.ui.mixin;
 
 import com.nali.C;
-import com.nali.ui.Ui;
 import net.minecraft.client.Minecraft;
-import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 @Mixin(Minecraft.class)
 public abstract class MixinMinecraft
@@ -23,7 +16,8 @@ public abstract class MixinMinecraft
 	private void Minit(CallbackInfo Vc)
 	{
 		//System.loadLibrary("SmallPointer");
-		System.load(new File("libSmallPointer.so").getAbsolutePath());
+		String Pc = "SmallPointer";
+		System.load(new File(System.mapLibraryName(Pc)).getAbsolutePath());
 		C.Mgl();
 	}
 
