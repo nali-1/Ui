@@ -1,5 +1,6 @@
 package com.nali;
 
+//! clean
 public enum Ekf
 {
 	UI_IDLE((byte)0, (byte)2),

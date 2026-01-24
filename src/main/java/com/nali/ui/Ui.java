@@ -6,6 +6,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import sun.misc.Unsafe;
 
 @Mod(modid = Tags.MOD_ID, name = Tags.MOD_NAME, version = Tags.VERSION)
 public class Ui
@@ -13,16 +14,13 @@ public class Ui
 	@Mod.Instance
 	public static Ui UI;
 
-	public final static byte bTICK = 20;
+	//.c support shaderpack
+	public final static boolean Bcomp_shader = true;
 
-//	public static float fDelta;
-//	private static long Llast_time = System.nanoTime();
-//	public static void Mdelta()
-//	{
-//		long now = System.nanoTime();
-//		fDelta = (now - Llast_time) / 1_000_000_000F;
-//		Llast_time = now;
-//	}
+	public static Unsafe vUS;
+	public static long lP;
+
+	public final static byte bTICK = 20;
 
 	public static final Logger LOGGER = LogManager.getLogger(Tags.MOD_NAME);
 
@@ -37,10 +35,4 @@ public class Ui
 	{
 		EntityR.M1();
 	}
-
-//	@Mod.EventHandler
-//	public void Ms(FMLServerStartingEvent fmlserverstartingevent)
-//	{
-//		fmlserverstartingevent.registerServerCommand(new Command());
-//	}
 }

@@ -1,5 +1,6 @@
 package com.nali;
 
+//! clean
 public enum Em
 {
 	UI_RAIN0,

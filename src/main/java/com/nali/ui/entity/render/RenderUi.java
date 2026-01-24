@@ -4,8 +4,8 @@ import com.nali.C;
 import com.nali.Ekf;
 import com.nali.Em;
 import com.nali.ui.M;
+import com.nali.ui.Ui;
 import com.nali.ui.entity.EntityUi;
-import com.nali.ui.mixin.IMixinEntityRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
@@ -42,61 +42,56 @@ public class RenderUi extends Render<EntityUi>
 		float Frender_yaw_offset = this.interpolateRotation(Ve.prevRenderYawOffset, Ve.renderYawOffset, Fpartialticks);
 		float Frotation_yaw_head = this.interpolateRotation(Ve.prevRotationYawHead, Ve.rotationYawHead, Fpartialticks);
 		float Fnet_head_yaw = Frotation_yaw_head - Frender_yaw_offset;
-		//float Fhead_pitch = Ve.prevRotationPitch + (Ve.rotationPitch - Ve.prevRotationPitch) * Fpartialticks;
-		//Ui.LOGGER.info("Fhead_pitch " + Fhead_pitch);
-		//Ui.LOGGER.info("Fnet_head_yaw " + Fnet_head_yaw);
 		GlStateManager.rotate(-Fyaw, 0.0F, 1.0F, 0.0F);
 		GlStateManager.rotate(-Fnet_head_yaw, 0.0F, 1.0F, 0.0F);
-		//GlStateManager.rotate(Fnet_head_yaw, 0.0F, 1.0F, 0.0F);
 		int Ic = Ve.getEntityWorld().getCombinedLight(Ve.getPosition(), 0);
 		int Icb = (Ic >> 4) & 0xF;
 		int Ics = (Ic >> 20) & 0xF;
 		int Ick = (Ics << 4) | Icb;
 		EntityDataManager Ventitydatamanager = Ve.getDataManager();
 		Ve.Fkf1 = Ventitydatamanager.get(EntityUi.vKF);
-		//Ui.LOGGER.info("Ve.Fkf1 " + Ve.Fkf1);
 		byte Bk_ui = Ventitydatamanager.get(EntityUi.vK);
 		byte Ba0 = Ventitydatamanager.get(EntityUi.vA0);
 		byte Ba1 = Ventitydatamanager.get(EntityUi.vA1);
-		//float Fkf = Ve.Fkf1;
 
 		Ekf[] Vekf = Ekf.values();
 		byte Bstart = Vekf[Bk_ui].start;
 		byte Bend = Vekf[Bk_ui].end;
 		float Fkf = M.Mlerp_wrap(Ve.Fkf0, Ve.Fkf1, Bstart, Bend, Fpartialticks);
-//		float Fkf;
-//		if (Ve.Fkf0 == Ve.Fkf1)
-//			Fkf = Ve.Fkf0;
-//		else
-//			Fkf = M.Mwarp(Ve.Fkf0 + M.Mwarp(Ve.Fkf1 - Ve.Fkf0, Bstart, Bend) * Fpartialticks, Bstart, Bend);
 		Ve.Fkf0 = Ve.Fkf1;
 
-//		Ve.Fkf0 += Ui.fDelta;
-		//float Fkf_croakie = Fkf;
 		byte Bk_croakie;
 		if (Bk_ui == Ekf.UI_WALK.ordinal())
 		{
-//			Fkf_croakie -= Ekf.UI_WALK.start;
-//			Fkf_croakie += Ekf.CROAKIE_WALK.start;
 			Bk_croakie = (byte)Ekf.CROAKIE_WALK.ordinal();
 		}
 		else
 		{
 			Bk_croakie = (byte)Ekf.CROAKIE_IDLE.ordinal();
 		}
-		//Ui.LOGGER.info("Fkf " + Fkf);
 		byte Bm_ui = (byte)Em.UI_RAIN2.ordinal();
 		if (Bk_ui == Ekf.UI_IDLE.ordinal())
 			Bm_ui = (byte)Em.UI_RAIN0.ordinal();
-		C.Mdraw(Ba0 > 0 ? Bm_ui : (byte)Em.UI_RAIN1.ordinal(), Bk_ui, Fkf, ((IMixinEntityRenderer)Minecraft.getMinecraft().entityRenderer).Mlightmap_colors()[Ick]);
-		C.Mdraw(Ba1 > 0 ? (byte)Em.CROAKIE_RAIN0.ordinal() : (byte)Em.CROAKIE_RAIN1.ordinal(), Bk_croakie, Fkf, ((IMixinEntityRenderer)Minecraft.getMinecraft().entityRenderer).Mlightmap_colors()[Ick]);
+		if (!Ui.Bcomp_shader)
+		{
+			Ui.vUS.putInt(Ui.lP + 1 + 1 + 4, Minecraft.getMinecraft().entityRenderer.lightmapColors[Ick]);
+		}
 
-		//C.Mdraw((byte)Em.UI_RAIN0.ordinal(), Bk_ui, Fkf, ((IMixinEntityRenderer)Minecraft.getMinecraft().entityRenderer).Mlightmap_colors()[Ick]);
-		//C.Mdraw((byte)Em.CROAKIE_RAIN0.ordinal(), Bk_croakie, Fkf, ((IMixinEntityRenderer)Minecraft.getMinecraft().entityRenderer).Mlightmap_colors()[Ick]);
+		Ui.vUS.putFloat(Ui.lP + 1 + 1, Fkf);
+
+		Ui.vUS.putByte(Ui.lP, Ba0 > 0 ? Bm_ui : (byte)Em.UI_RAIN1.ordinal());
+		Ui.vUS.putByte(Ui.lP + 1, Bk_ui);
+		C.Mdraw();
+
+		Ui.vUS.putByte(Ui.lP, Ba1 > 0 ? (byte)Em.CROAKIE_RAIN0.ordinal() : (byte)Em.CROAKIE_RAIN1.ordinal());
+		Ui.vUS.putByte(Ui.lP + 1, Bk_croakie);
+		C.Mdraw();
+
 		GlStateManager.popMatrix();
 		super.doRender(Ve, Dx, Dy, Dz, Fyaw, Fpartialticks);
 	}
 
+	//! clean
 	protected float interpolateRotation(float prevYawOffset, float yawOffset, float partialTicks)
 	{
 		float f;

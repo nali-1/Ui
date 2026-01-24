@@ -4,7 +4,6 @@ import com.google.common.base.Predicate;
 import com.nali.Ekf;
 import com.nali.ui.M;
 import com.nali.ui.Ui;
-import com.nali.ui.mixin.IMixinEntityCreeper;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.monster.EntityCreeper;
@@ -18,25 +17,24 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.event.ClickEvent;
+import net.minecraft.util.text.event.HoverEvent;
 import net.minecraft.world.World;
 import net.minecraftforge.event.ForgeEventFactory;
 
 import javax.annotation.Nullable;
+import java.util.Arrays;
 
 //! EntityLivingBase
 public class EntityUi extends EntityTameable
 {
-//	private final static byte uHOME = 1;
-//	//private final static byte uST = 2;
-//	private final static byte uSKILL = 4;
-//	private final static byte uTAKE = 8;
-//	private final static byte uKILL = 16;
-//	private final static byte uMINE = 32;
-//	private byte Ustate = uHOME + uSKILL + uTAKE + uMINE;
 	public EntityUi(World Vw)
 	{
 		super(Vw);
-		this.setSize(1.0F, 2.0F);
+		this.setSize(1.0F, 1.25F);
 	}
 
 	//.i server
@@ -46,6 +44,7 @@ public class EntityUi extends EntityTameable
 	//.i client
 	public float Fkf0;
 	public float Fkf1;
+	//! move to udp
 	public static final DataParameter<Float> vKF = EntityDataManager.<Float>createKey(EntityUi.class, DataSerializers.FLOAT);
 	public static final DataParameter<Byte> vK = EntityDataManager.<Byte>createKey(EntityUi.class, DataSerializers.BYTE);
 	public static final DataParameter<Byte> vA0 = EntityDataManager.<Byte>createKey(EntityUi.class, DataSerializers.BYTE);
@@ -60,54 +59,11 @@ public class EntityUi extends EntityTameable
 		this.dataManager.register(vA1, (byte)0);
 	}
 
-//	private final static ITextComponent vACTION = new TextComponentString("Action").setStyle(new Style().setUnderlined(true));
-//	private final static ITextComponent vPHOME = new TextComponentString("⌂✓").setStyle(new Style().setColor(TextFormatting.GREEN));
-//	private final static ITextComponent vNHOME = new TextComponentString("⌂✗").setStyle(new Style().setColor(TextFormatting.RED));
-//	//private final static ITextComponent vPST = new TextComponentString("☺✓").setStyle(new Style().setColor(TextFormatting.GREEN));
-//	//private final static ITextComponent vNST = new TextComponentString("☺✗").setStyle(new Style().setColor(TextFormatting.RED));
-//	private final static ITextComponent vPSKILL = new TextComponentString("♪✓").setStyle(new Style().setColor(TextFormatting.GREEN));
-//	private final static ITextComponent vNSKILL = new TextComponentString("♪✗").setStyle(new Style().setColor(TextFormatting.RED));
-//	private final static ITextComponent vPTAKE = new TextComponentString("☼✓").setStyle(new Style().setColor(TextFormatting.GREEN));
-//	private final static ITextComponent vNTAKE = new TextComponentString("☼✗").setStyle(new Style().setColor(TextFormatting.RED));
-//	private final static ITextComponent vPKILL = new TextComponentString("☻✓").setStyle(new Style().setColor(TextFormatting.GREEN));
-//	private final static ITextComponent vNKILL = new TextComponentString("☻✗").setStyle(new Style().setColor(TextFormatting.RED));
-//	private final static ITextComponent vPMINE = new TextComponentString("♦✓").setStyle(new Style().setColor(TextFormatting.GREEN));
-//	private final static ITextComponent vNMINE = new TextComponentString("♦✗").setStyle(new Style().setColor(TextFormatting.RED));
-//	public static void Mact(EntityPlayer Vp, EntityUi Ve)
-//	{
-//		if (Ve.isOwner(Vp))
-//		{
-//			TextComponentString V1 = new TextComponentString(" +");
-//			V1.setStyle
-//			(
-//				new Style().setColor(TextFormatting.RED)
-//				.setClickEvent
-//				(
-//					new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ui " + Ve.getUniqueID() + " 0 0")
-//				)
-//				.setHoverEvent
-//				(
-//					new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponentString("▲0.05/▼1"))
-//				)
-//			);
-//
-//			Vp.sendMessage(Ve.getDisplayName().setStyle(new Style().setUnderlined(true)));
-//			Vp.sendMessage
-//			(
-//				new TextComponentString(SharedMonsterAttributes.MAX_HEALTH.getName()).appendSibling(new TextComponentString(" " + String.format("%.2f", Ve.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).getAttributeValue())).setStyle(new Style().setColor(TextFormatting.GOLD))).appendSibling(V1)
-//			);
-//			Vp.sendMessage(new TextComponentString(SharedMonsterAttributes.MOVEMENT_SPEED.getName()).appendSibling(new TextComponentString(" " + String.format("%.2f", Ve.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue())).setStyle(new Style().setColor(TextFormatting.GOLD))));
-//			Vp.sendMessage(new TextComponentString(SharedMonsterAttributes.ATTACK_DAMAGE.getName()).appendSibling(new TextComponentString(" " + String.format("%.2f", Ve.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue())).setStyle(new Style().setColor(TextFormatting.GOLD))));
-//
-//			Vp.sendMessage(vACTION);
-//			Vp.sendMessage();
-//			Vp.sendMessage();
-//		}
-//	}
-
 	@Override
 	protected void initEntityAI()
 	{
+		//! clean
+		//! ai -> server
 		this.aiSit = new EntityAISit(this);
 		this.tasks.addTask(1, new EntityAISwimming(this));
 		this.tasks.addTask(2, this.aiSit);
@@ -117,7 +73,7 @@ public class EntityUi extends EntityTameable
 			@Override
 			protected double getAttackReachSqr(EntityLivingBase attackTarget)
 			{
-				return (double)(this.attacker.width * 10.0F * this.attacker.width * 10.0F + attackTarget.width);
+				return this.attacker.width * 10.0F * this.attacker.width * 10.0F + attackTarget.width;
 			}
 
 			@Override
@@ -136,7 +92,7 @@ public class EntityUi extends EntityTameable
 						entitylivingbase.hurtResistantTime = 0;
 						if (entitylivingbase instanceof EntityCreeper)
 						{
-							((IMixinEntityCreeper)entitylivingbase).Mtime_since_ignited(0);
+							((EntityCreeper)entitylivingbase).timeSinceIgnited = 0;
 						}
 						this.attacker.swingArm(EnumHand.MAIN_HAND);
 						this.attacker.attackEntityAsMob(entitylivingbase);
@@ -184,12 +140,11 @@ public class EntityUi extends EntityTameable
 		{
 			if (!this.world.isRemote)
 			{
-//				if (Vp.isSneaking())
-//				{
-//					Mact(Vp, this);
-//				}
-//				else
-				if (this.isOwner(Vp))
+				if (Vp.isSneaking())
+				{
+					//! act
+				}
+				else if (this.isOwner(Vp))
 				{
 					this.aiSit.setSitting(!this.isSitting());
 					this.isJumping = false;
@@ -229,6 +184,18 @@ public class EntityUi extends EntityTameable
 	{
 		return 8;
 	}
+
+//	@Override
+//	public float getWaterSlowDown()
+//	{
+//		return 1.0F;
+//	}
+//
+//	@Override
+//	public boolean isPushedByWater()
+//	{
+//		return false;
+//	}
 
 	@Override
 	public boolean attackEntityFrom(DamageSource Vd, float amount)
@@ -273,8 +240,6 @@ public class EntityUi extends EntityTameable
 	public void onUpdate()
 	{
 		super.onUpdate();
-//		if (this.world.isRemote)
-//			this.rotationYaw += 45.0F / Ui.bTICK;
 
 		if (!this.world.isRemote)
 		{
@@ -297,7 +262,6 @@ public class EntityUi extends EntityTameable
 			}
 			else if (!this.isSitting())
 			{
-				//Ui.LOGGER.info("this.Fkf2 " + this.Fkf2);
 				this.Fkf2 += 1.0F / Ui.bTICK;
 				this.Fkf2 = M.Mwarp(this.Fkf2, Ekf.UI_IDLE1.start, Ekf.UI_IDLE1.end);
 				Bk_ui = (byte)Ekf.UI_IDLE1.ordinal();
@@ -334,10 +298,6 @@ public class EntityUi extends EntityTameable
 			this.dataManager.set(vK, Bk_ui);
 			this.dataManager.set(vA0, this.Ba0);
 			this.dataManager.set(vA1, this.Ba1);
-//			this.Fkf2 += 1.0F / Ui.bTICK;
-//			this.Fkf2 = M.Mwarp(this.Fkf2, Ekf.UI_IDLE1.start, Ekf.UI_IDLE1.end);
-//			this.dataManager.set(vKF, this.Fkf2);
-//			this.dataManager.set(vK, (byte)Ekf.UI_IDLE1.ordinal());
 		}
 	}
 
@@ -346,5 +306,11 @@ public class EntityUi extends EntityTameable
 	public EntityAgeable createChild(EntityAgeable Ve)
 	{
 		return null;
+	}
+
+	@Override
+	public boolean isBreedingItem(ItemStack Vis)
+	{
+		return false;
 	}
 }
